@@ -19,9 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchQuestion() {
-      const res = await fetch(
-        "https://api.boilerexams.com/questions/d44531f1-3cf7-404d-bd10-e9a786484b8a"
-      );
+      const res = await fetch("/api/question");
       const data = await res.json();
       setQuestion(data);
     }
