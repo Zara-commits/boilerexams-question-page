@@ -1,10 +1,9 @@
-"use client";
+"use client"; // Needed because we use useState and useEffect
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 type AnswerChoice = {
   id: string;
-  index: number;
   body: string;
 };
 
@@ -20,31 +19,34 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchQuestion() {
-      const response = await fetch(
+      const res = await fetch(
         "https://api.boilerexams.com/questions/d44531f1-3cf7-404d-bd10-e9a786484b8a"
       );
-      const data = await response.json();
+      const data = await res.json();
       setQuestion(data);
     }
 
     fetchQuestion();
-  }, []);
+  }, []); // empty array = run once
 
-  if (!question) {
-    return <p className="p-10">Loading question...</p>;
-  }
+  if (!question) return <p>Loading question...</p>;
 
   return (
-    <main className="p-10 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Practice Question</h1>
+    <main style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
+      <h1 style={{ fontWeight: "bold", marginBottom: "10px" }}>Practice Question</h1>
 
-      <p className="mb-6">{question.data.body}</p>
+      <p style={{ marginBottom: "20px" }}>{question.data.body}</p>
 
-      <div className="flex flex-col gap-3">
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {question.data.answerChoices.map((choice) => (
           <button
             key={choice.id}
-            className="border rounded p-3 text-left hover:bg-gray-100"
+            style={{
+              padding: "10px",
+              border: "1px solid #000",
+              textAlign: "left",
+              cursor: "pointer",
+            }}
           >
             {choice.body}
           </button>
